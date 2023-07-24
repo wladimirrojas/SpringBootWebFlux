@@ -1,5 +1,7 @@
 package com.example.springbootwebflux.app.models;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,11 @@ public class Product {
 
     @Id
     private String id;
+
+    @NotEmpty
     private String name;
+
+    @NotNull
     private Double price;
     private LocalDateTime createdAt;
 
