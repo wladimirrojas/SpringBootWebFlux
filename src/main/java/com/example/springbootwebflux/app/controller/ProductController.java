@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -141,6 +142,20 @@ public class ProductController {
         return productService.save(product).doOnNext(p -> {
             log.info("Product saved: " + p.getName() + " Id: " + p.getId());
         }).thenReturn("redirect:/listing?success=product+saved+successfully");
+    }
+
+    @GetMapping("/delete/{id}")
+    public Mono<String> delete(@PathVariable String id) {
+        return productService.findById(id)
+                .defaultIfEmpty(new Product())
+                .flatMap(p -> {
+                    if (p.getId() == null) {
+                        return Mono.error(new InterruptedException("Product does not exist to delete"));
+                    }
+                    return Mono.just(p);
+                }).flatMap(productService::delete)
+                .then(Mono.just("redirect:/listing?success=product+deleted+succesfully"))
+                .onErrorResume(ex -> Mono.just("redirect:/listing?error=product+does+not+exist+to+delete"));
     }
 
 }

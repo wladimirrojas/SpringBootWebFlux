@@ -19,6 +19,7 @@
         <th>price</th>
         <th>date</th>
         <th>edit</th>
+        <th>delete</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td th:text="${product.price}"></td>
         <td th:text="${product.createdAt}"></td>
         <td><a th:href="@{/form/} + ${product.id}">edit</a></td>
+        <td><a th:href="@{/delete/} + ${product.id}" onclick="return confirm('Are you sure you want to delete?');">delete</a></td>
     </tr>
     </tbody>
 </table>
