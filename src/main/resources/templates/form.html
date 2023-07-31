@@ -20,7 +20,14 @@
         </div>
         <div><label for="createdAt">Created at</label>
             <div><input type="datetime-local" th:field="*{createdAt}"></div>
-            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+        <div><label for="category.id">Category</label>
+            <div><select th:field="*{category.id}">
+                <option value="">-- Select --</option>
+                <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+                <small th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></small>
+            </div>
         </div>
             <div><input type="submit" th:value="${button}"></div>
 </div>

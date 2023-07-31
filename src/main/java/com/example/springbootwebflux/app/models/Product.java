@@ -26,9 +26,15 @@ public class Product {
     @NotNull
     private Double price;
     private LocalDateTime createdAt;
+    private Category category;
 
     public Product(String name, Double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public Product(String name, Double price, Category category) {
+        this(name, price);
+        this.category = category;
     }
 }
